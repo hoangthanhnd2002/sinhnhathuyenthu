@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Định dạng vị trí audio */
+        .wrapper {
+            position: relative;
+        }
+
+        .audio-container {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 0;
+        background-color: rgba(255, 255, 255, 0.9);
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 5px;
+        z-index: 999;
+        }
+
+        /* Tùy chỉnh nút điều khiển audio */
+        audio {
+            width: 60%;
+        }
+    </style>
+    <title>Chúc mừng sinh nhật bạn</title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="loader">
+            <div class="cardHover">
+                <div class="inner one" style="--i:1;"></div>
+                <div class="inner two" style="--i:1;"></div>
+                <div class="inner three" style="--i:1;"></div>
+                <div class="box-heart">
+                    <div class="heart"></div>
+                </div>
+            </div>
+        </div>
+        
+        <button><p>Click vào đây nè:)))</p></button>
+        <div class="content">
+            <i class="fa-solid fa-xmark"></i>
+            <h1>Happy birthday Thu Huyền</h1>
+            <p>Sinh nhật vui vẻ. Mình thật sự không biết
+                phải chúc sao. Gì cũng được nghĩa là bạn luôn vui vẻ nha!
+                Hoàng Thành
+            </p>
+            <button id="showMemories">Xem kỷ niệm</button>                                    
+        </div>
+    </div>
+    <div class="leaf-container">
+        <div class="memory-item">
+            <img src="a.jpg" alt="Leaf 1">
+            <p class="memory-text">Kỷ niệm 1</p>
+        </div>
+        <div class="memory-item">
+            <img src="bgrMail.jpg" alt="Leaf 2">
+            <p class="memory-text">Kỷ niệm 2</p>
+        </div>
+        <div class="memory-item">
+            <img src="bgr.jpg" alt="Leaf 3">
+            <p class="memory-text">Kỷ niệm 3</p>
+        </div>
+        <div class="memory-item">
+            <img src="a.jpg" alt="Leaf 4">
+            <p class="memory-text">Kỷ niệm 4</p>
+        </div>
+        <div class="memory-item">
+            <img src="ccc.jpg" alt="Leaf 5">
+            <p class="memory-text">Kỷ niệm 5</p>
+        </div>
+        <div class="memory-item">
+            <img src="bb.jpg" alt="Leaf 6">
+            <p class="memory-text">Kỷ niệm 6</p>
+        </div>
+    </div>
+    
+    <audio controls autoplay loop class="audio-container">
+            <source src="IMG_6139.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+    </audio>
+    
+
+    <script type="text/javascript" src="vanilla-tilt.js"></script>
+    <script>
+        VanillaTilt.init(document.querySelector(".wrapper"), {
+            max: 25,
+            speed: 400,
+            glare: true,
+            "max-glare": 0.25,
+            gyroscopeMinAngleX: -45,
+        });
+
+        var btn = document.querySelector("button");
+        var closeBtn = document.querySelector(".fa-xmark");
+
+        btn.addEventListener("click", () => {
+            document.querySelector(".wrapper").classList.add("active");
+            btn.style.display = "none";
+        });
+
+        closeBtn.addEventListener("click", () => {
+            document.querySelector(".wrapper").classList.remove("active");
+            btn.style.display = "block";
+        });
+
+        function createFallingLeaves() {
+            const leafContainer = document.querySelector(".leaf-container");
+
+            if (leafContainer.children.length >= 10) {
+                return;
+            }
+
+            for (let i = 0; i < 10; i++) {
+                const leafImg = document.createElement("img");
+                const leafImages = ["a.jpg", "bb.jpg", "ccc.jpg"];
+                const randomLeafImage = leafImages[Math.floor(Math.random() * leafImages.length)];
+                leafImg.src = randomLeafImage;
+
+                leafImg.classList.add("falling-leaf");
+                leafImg.style.left = Math.random() * 100 + "vw";
+                leafImg.style.animationDuration = Math.random() * 5 + 5 + "s";
+
+                leafImg.addEventListener("animationend", () => {
+                    leafContainer.removeChild(leafImg);
+                });
+
+                leafContainer.appendChild(leafImg);
+            }
+        }
+
+        setInterval(createFallingLeaves, 100);
+
+        var showMemoriesBtn = document.getElementById("showMemories");
+        var memoriesContainer = document.createElement("div");
+        memoriesContainer.className = "memories-container";
+        var leafContainer = document.createElement("div");
+        leafContainer.className = "leaf-container";
+
+        var memoryImages = ["a.jpg", "bb.jpg", "ccc.jpg", "g.jpg"];
+
+        showMemoriesBtn.addEventListener("click", function() {
+            document.body.appendChild(memoriesContainer);
+            memoriesContainer.appendChild(leafContainer);
+
+            memoryImages.forEach(function(imageSrc) {
+                var memoryItem = document.createElement("div");
+                memoryItem.className = "memory-item";
+                var memoryImage = document.createElement("img");
+                memoryImage.src = imageSrc;
+                memoryItem.appendChild(memoryImage);
+
+                var memoryText = document.createElement("p");
+                memoryText.className = "memory-text";
+                memoryText.textContent = "Kỷ niệm";
+                memoryItem.appendChild(memoryText);
+
+                memoryItem.addEventListener("mouseover", function() {
+                    memoryImage.classList.add("zoom-effect");
+                });
+
+                memoryItem.addEventListener("mouseout", function() {
+                    memoryImage.classList.remove("zoom-effect");
+                });
+
+                memoryItem.addEventListener("click", function() {
+                    var fallingLeafImage = document.createElement("img");
+                    fallingLeafImage.src = imageSrc;
+                    fallingLeafImage.className = "falling-leaf";
+                    leafContainer.appendChild(fallingLeafImage);
+
+                    fallingLeafImage.addEventListener("animationend", function() {
+                        leafContainer.removeChild(fallingLeafImage);
+                    });
+                });
+
+                memoriesContainer.appendChild(memoryItem);
+            });
+        });
+    </script>
+</body>
+</html>
